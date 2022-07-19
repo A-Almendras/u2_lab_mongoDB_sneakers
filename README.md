@@ -3,28 +3,31 @@
 ![AirForce1s](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FjeMmhPrGyoBoY%2Fgiphy.gif&f=1&nofb=1)
 
 ## Overview
+
 In this lab, we'll used what we learned about working in the mongo shell to practice interacting with a new database of sneakers.
 
 ## Getting started
+
 - `Fork` and `Clone`
-- Open in VSCode so you can *paste your answers* into the ReadMe
+- Open in VSCode so you can _paste your answers_ into the ReadMe
 - Open Terminal
 - Tighten those laces
 
 ## Instructions
 
 Below is an array of objects:
+
 ```js
 const products = [
-  { model: "4281", brand: "Nike", color: "Red" },
-  { model: "4363", brand: "Nike", color: "Black" },
-  { model: "4365", brand: "Nike", color: "White" },
-  { model: "4490", brand: "Nike", color: "White" },
-  { model: "130014", brand: "Nike", color: "Cream" },
-  { model: "4361", brand: "Nike", color: "White" },
-  { model: "130169", brand: "Nike", color: "Teal" },
-  { model: "4401", brand: "Nike", color: "Maroon" },
-  { model: "130182", brand: "Nike", color: "Gold" },
+  { model: '4281', brand: 'Nike', color: 'Red' },
+  { model: '4363', brand: 'Nike', color: 'Black' },
+  { model: '4365', brand: 'Nike', color: 'White' },
+  { model: '4490', brand: 'Nike', color: 'White' },
+  { model: '130014', brand: 'Nike', color: 'Cream' },
+  { model: '4361', brand: 'Nike', color: 'White' },
+  { model: '130169', brand: 'Nike', color: 'Teal' },
+  { model: '4401', brand: 'Nike', color: 'Maroon' },
+  { model: '130182', brand: 'Nike', color: 'Gold' }
 ]
 ```
 
@@ -71,31 +74,31 @@ Use the MongoDB lesson to solve for the following:
 1. Find all the Air Jordans that have the model number: **4363**.
 
 ```sh
-<--- solution goes here !--->
+db.products.find({ model: "4363" })
 ```
 
 2. Find all shoes that are either **red** or **black**.
 
 ```sh
-<--- solution goes here !--->
+db.products.find({ $or: [ { color: "Red" }, { color: "Black" } ] })
 ```
 
 3. Insert **4 new** [Air Jordans](https://www.jordan.com/collection/) into our collection (you can just make up model #s and colors if you like):
 
 ```sh
-<--- solution goes here !--->
+db.products.insertMany([ { model: "6452", brand: "Nike", color: "Checkered" }, { model: "8219", brand: "Nike", color: "Pink" }, { model: "58793", brand: "Nike", color: "Orange" }, { model: "687713", brand: "Nike", color: "Brown" } ])
 ```
 
 4. Update all **red** Jordans to **Maroon**:
 
 ```sh
-<--- solution goes here !--->
+db.products.updateMany( {color: "Red"}, {$set: {color: "Maroon"}, $currentDate: {lastModified: true} } )
 ```
 
 5. Delete all model **4281** Air Jordans.
 
 ```sh
-<--- solution goes here !--->
+db.products.deleteMany( {model: "4281"} )
 ```
 
 ## Bonus
@@ -115,12 +118,25 @@ Once you have a better representation of a product, apply the changes to every p
 Write your queries below:
 
 ```sh
-<--- solution goes here !--->
+db.products.updateOne( {brand: "Nike"}, {$set: {sizes:[7,8,9], qty:20} } )
+db.products.updateMany( {color: "White"}, {$set: {sizes:[7,8,9,10,11], qty:15} } )
+db.products.updateMany( {model: "4401"}, {$set: {sizes:[5,6,7,8,9],  qty:40} } )
+db.products.updateMany( {model: "6452"}, {$set: {sizes:[5,6,7,8],  qty:40} } )
+db.products.updateMany( {model: "8219"}, {$set: {sizes:[5,6,7,8],  qty:40} } )
+db.products.updateMany( {model: "58793"}, {$set: {sizes:[5,6,7],  qty:540} } )
+db.products.updateMany( {model: "687713"}, {$set: {sizes:[5,6,7],  qty:540} } )
+
+Queries that I tried that did not work like desired:
+db.products.updateMany( { {model: "6452"}, {$set: {sizes:[5,6,7,8],  qty:40} } }, { {model: "8219"}, {$set: {sizes:[5,6,7,8],  qty:40} } } )
+db.products.updateMany( {model: "4401"}, {model: "6452"}, {$set: {sizes:[5,6,7,8,9],  qty:40} } )
+db.products.updateMany( {model: "4401", model: "130169"}, {$set: {sizes:[5,6], qty:5} } )
+db.products.updateMany( {model: "4363", model: "130014"}, {$set: {sizes:[7,8], qty:10} } )
 ```
 
 ![Jordan](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F66.media.tumblr.com%2Fa46d189bb8c3489dd21537e8478f61c4%2Ftumblr_p44eax11pT1r2cri9o2_500.gifv&f=1&nofb=1)
 
 ## Resources
+
 - [Intro to MongoDB](https://github.com/SEI-R-4-26/u2_lesson_mongoDB)
 - [Mongo Shell](https://docs.mongodb.com/manual/mongo/)
 - [MongoDB Glossary](https://docs.mongodb.com/manual/reference/glossary/)
